@@ -17,6 +17,7 @@ const Header = ()=>{
             </div>
             <div className='flex items-center'>
                 <ul className='flex p-4 m-4'>
+                    <li className='px-4'>Online Status: {onlineStatus?"✅":"🔴"}</li>
                     <li className ='px-4'>
                         Home
                     </li>
@@ -26,6 +27,7 @@ const Header = ()=>{
                     <li className ='px-4'>
                         Contact Us
                     </li>
+
                     <button className='px-4 bg-green-300 rounded-b-lg'
                         onClick={()=>{
                             btnNameReact=="login"?
