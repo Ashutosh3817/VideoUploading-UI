@@ -28,7 +28,7 @@ const Header = ()=>{
                         Contact Us
                     </li>
 
-                    <button className='px-4 bg-green-300 rounded-b-lg'
+                    <button className='px-4 bg-green-300 rounded-lg'
                         onClick={()=>{
                             btnNameReact=="login"?
                             setBtnNameReact("logout"):
