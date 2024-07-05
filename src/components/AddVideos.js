@@ -1,192 +1,270 @@
-// import React,{useState,useEffect} from "react";
+// import React, { useState } from "react";
 // import { toast } from "react-toastify";
-// import { UploadVideo, saveVideoInfo } from "../utils/videoService";
+// import { UploadVideo, SaveVideoInfo } from "../utils/videoService";
+// import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+// import "react-circular-progressbar/dist/styles.css"; // Import styles
 
-// const AddVideo = () =>{
-
-//     // const[title,setTitle] = useState("");
-//     // const[description,setDesciprion] = useState("");
-//     // const[videoName,setVideoName] = useState("");
-//     const[video,setVideo] = useState({
-//         title:"",
-//         tags:"",
-//         description:""
+// const AddVideo = () => {
+//     const [video, setVideo] = useState({
+//         title: "",
+//         tags: "",
+//         description: ""
 //     });
-//     const[progress,setProgress] = useState(0);
-//     const[videos,setVideos] = useState(null);
-//     const[loading,setLoading] = useState(true);
-//     const[singleProgress,setSingleProgress] = useState(0);
+//     const [progress, setProgress] = useState(0);
+//     const [videos, setVideos] = useState(null);
+//     const [singleProgress, setSingleProgress] = useState(0);
 
-//     //for showing the how much percent of video get uploads 
+//     // For showing how much percent of the video gets uploaded
 //     const singleFileOptions = {
-//         uploadProgress: (ProgressEvent) =>{
-//             const{loaded,total} = ProgressEvent;
-//             const percentage = Math.floor(((loaded/1000)*100)/(total/1000));
+//         uploadProgress: (ProgressEvent) => {
+//             const { loaded, total } = ProgressEvent;
+//             const percentage = Math.floor(((loaded / 1000) * 100) / (total / 1000));
 //             setSingleProgress(percentage);
 //         }
 //     }
 
-//     //field change handle function
-//     const fieldHandleChange = (event)=>{
-//         console.log(event.target.files[0]);
-//         setVideos(event.target.files[0]);
-//         //setState variable helps to trigger the reconciliation algorithm whenever there is change in the state
+//     // Field change handle function for video metadata
+//     const fieldHandleChange = (event) => {
+//         const { name, value } = event.target;
+//         setVideo(prevVideo => ({
+//             ...prevVideo,
+//             [name]: value
+//         }));
 //     }
 
-//     //upload video function with title,tags and descriptions 
-//     const createVideo = (event)=>{
-//         event.preventDefault();
-//         console.log(video)
-
-//         if(video.title.trim() === ""){
-//             toast.error("Video Title cann't be empty: ");
-//             return;
+//     // File change handle function for video file
+//     const handleFileChange = (event) => {
+//         if (event.target.files && event.target.files.length > 0) {
+//             console.log(event.target.files[0]);
+//             setVideos(event.target.files[0]);
+//         } else {
+//             console.log('No file selected');
 //         }
-//         if(video.description.trim() === ""){
-//             toast.error("Please enter some description under 50-500 words: ")
-//         }
-//         //submit call start here
-//         saveVideoInfo((video).then((data)=>{
-//             console.log(data)
-//             //when we get the video from backend then with the help of id we save the video
-//             UploadVideo(videos,data,id,singleFileOptions).then((data)=>{
-//                 setLoading(true);
-//                 alert("Wait Video Is Uploading !!!")
-//                 console.log(data);
-//                 setVideos(event.target.files[0])
-//             }).catch((error)=>{
-//                 console.log(error);
-//             });
-//             toast.success("video Uploaded SuccessFully With All The Information!!!");
-//         }))
 //     }
 
+//     // Upload video function with title, tags, and descriptions
+//    // Upload video function with title, tags, and descriptions
+// const createVideo = (event) => {
+//     event.preventDefault();
+//     console.log(video);
 
-//     return(
-//         <div>
-
-//         </div>
-//     )
+//     if (video.title.trim() === "") {
+//         toast.error("Video Title can't be empty");
+//         return;
+//     }
+//     if (video.description.trim() === "") {
+//         toast.error("Please enter some description under 50-500 words");
+//         return;
+//     }
+//     // Submit call start here
+//     SaveVideoInfo(video).then((data) => {
+//         console.log(data);
+//         // When we get the video from backend, then with the help of id we save the video
+//         UploadVideo(videos, data.id, singleFileOptions).then((data) => {
+//             setSingleProgress(0);
+//             setVideos(null);
+//             console.log(data);
+//             alert("Video uploaded successfully!");
+//         }).catch((error) => {
+//             console.log(error);
+//             toast.error("Failed to upload video file");
+//         });
+//         toast.success("Video uploaded successfully with all the information!");
+//         setVideo({
+//             title: "", description: "", tags: "",
+//         });
+//     }).catch((error) => {
+//         console.log(error);
+//         toast.error("Failed to save video info");
+//     });
 // }
+
+//     return (
+//         <div className="min-h-screen flex items-center justify-center py-6 bg-gray-500">
+//             <div className="w-full max-w-4xl bg-white border rounded-lg p-6 mt-6 shadow-lg">
+//                 <div className="mb-6 text-center">
+//                     <a className="bg-blue-500 p-2 text-white rounded hover:bg-blue-700" href="/">Click Here to watch the videos</a>
+//                 </div>
+//                 <div className="mb-2 shadow-sm border border-gray-300 rounded p-4 mt-2">
+//                     <div className="mb-6">
+//                         <h3 className="text-2xl font-bold mb-4">Form for uploading the video</h3>
+//                         <form onSubmit={createVideo}>
+//                             <div className="mb-4">
+//                                 <label htmlFor="title" className="block text-gray-700">Video Title</label>
+//                                 <input type="text" id="title" name="title" placeholder="Enter title here" value={video.title} onChange={fieldHandleChange} className="w-full px-3 py-2 border rounded-lg" />
+//                             </div>
+//                             <div className="mb-4">
+//                                 <label htmlFor="tags" className="block text-gray-700">Video Tags</label>
+//                                 <input type="text" id="tags" name="tags" placeholder="Enter tags here" value={video.tags} onChange={fieldHandleChange} className="w-full px-3 py-2 border rounded-lg" />
+//                             </div>
+//                             <div className="mb-4">
+//                                 <label htmlFor="description" className="block text-gray-700">Video Description</label>
+//                                 <input type="text" id="description" name="description" placeholder="Enter description here" value={video.description} onChange={fieldHandleChange} className="w-full px-3 py-2 border rounded-lg" />
+//                             </div>
+//                             <div className="mb-4">
+//                                 <label htmlFor="video">Select Video to post:</label>
+//                                 <input type="file" onChange={handleFileChange} />
+//                             </div>
+//                             <div className="mb-4 w-36 h-36">
+//                                 <CircularProgressbar
+//                                     strokeWidth={10}
+//                                     value={singleProgress}
+//                                     text={`${singleProgress}%`}
+//                                     styles={buildStyles({
+//                                         rotation: 0.25,
+//                                         strokeLinecap: 'butt',
+//                                         textSize: '16px',
+//                                         pathTransitionDuration: 0.5,
+//                                         pathColor: `rgba(62, 152, 199, ${singleProgress / 100})`,
+//                                         textColor: '#f88',
+//                                         trailColor: '#d6d6d6',
+//                                         backgroundColor: '#3e98c7'
+//                                     })}
+//                                 />
+//                             </div>
+//                             <div className="text-center">
+//                                 <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700">
+//                                     Upload Video
+//                                 </button>
+//                             </div>
+//                         </form>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
+
 // export default AddVideo;
 
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { SaveVideoInfo, UploadVideo } from '../utils/videoService';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { UploadVideo, SaveVideoInfo } from "../utils/videoService";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css"; // Import styles
 
 const AddVideo = () => {
     const [video, setVideo] = useState({
         title: "",
         tags: "",
-        description: "",
+        description: ""
     });
     const [progress, setProgress] = useState(0);
     const [videos, setVideos] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [singleProgress, setSingleProgress] = useState(0);
+
+    // For showing how much percent of the video gets uploaded
     const singleFileOptions = {
-        onUploadProgress: (progressEvent) => {
-            const { loaded, total } = progressEvent;
-            const percentage = Math.floor(((loaded / 1000) * 100) / (total / 1000));
+        onUploadProgress: (ProgressEvent) => {
+            const { loaded, total } = ProgressEvent;
+            const percentage = Math.floor((loaded * 100) / total);
             setSingleProgress(percentage);
         }
-    };
+    }
 
-    //fields change handle function .
-    const fieldChangeHandle = (event) => {
-        setVideo({ ...video, [event.target.name]: event.target.value });
-    };
+    // Field change handle function for video metadata
+    const fieldHandleChange = (event) => {
+        const { name, value } = event.target;
+        setVideo(prevVideo => ({
+            ...prevVideo,
+            [name]: value
+        }));
+    }
 
-    //handling file change event .
+    // File change handle function for video file
     const handleFileChange = (event) => {
-        console.log(event.target.files[0]);
-        setVideos(event.target.files[0]);
-    };
+        if (event.target.files && event.target.files.length > 0) {
+            console.log(event.target.files[0]);
+            setVideos(event.target.files[0]);
+        } else {
+            console.log('No file selected');
+        }
+    }
 
-    //Upload videos function with title, description, tags.
+    // Upload video function with title, tags, and descriptions
     const createVideo = (event) => {
         event.preventDefault();
         console.log(video);
+
         if (video.title.trim() === "") {
-            toast.error("please enter title");
+            toast.error("Video Title can't be empty");
             return;
         }
         if (video.description.trim() === "") {
-            toast.error("Enter some description below 500 character");
+            toast.error("Please enter some description under 50-500 words");
             return;
         }
-        //submit call starts here .
+        // Submit call start here
         SaveVideoInfo(video).then((data) => {
             console.log(data);
+            // When we get the video from backend, then with the help of id we save the video
             UploadVideo(videos, data.id, singleFileOptions).then((data) => {
-                setLoading(true);
-                alert(" wait video is Uploading");
+                setSingleProgress(0);
+                setVideos(null);
                 console.log(data);
-                setVideos(event.target.files[0]);
+                alert("Video uploaded successfully!");
             }).catch((error) => {
                 console.log(error);
+                toast.error("Failed to upload video file");
             });
-            toast.success("Video Uploaded with Information!!");
-            console.log(video);
+            toast.success("Video uploaded successfully with all the information!");
             setVideo({
                 title: "", description: "", tags: "",
             });
         }).catch((error) => {
-            alert("upload failed");
+            console.log(error);
+            toast.error("Failed to save video info");
         });
-    };
+    }
 
     return (
-        <div className='wrapper'>
-            <div className="container mx-auto p-4">
-                <div className="mb-2 p-4">
-                    <a href="/view" className="btn btn-primary btn-lg">Click to Watch Videos</a>
+        <div className="min-h-screen flex items-center justify-center py-12 bg-gray-100">
+            <div className="w-full max-w-4xl bg-white border rounded-lg p-8 shadow-lg">
+                <div className="mb-6 text-center">
+                    <a className="bg-blue-500 p-2 text-white rounded hover:bg-blue-700" href="/">Click Here to Watch Videos</a>
                 </div>
-                <div className="shadow-sm border border-gray-300 mt-2 rounded-lg">
-                    <div className="p-4">
-                        <h3 className="font-bold text-lg mb-4">Form for Uploading Video</h3>
-                        <form onSubmit={createVideo}>
-                            <div className="mb-4">
-                                <label htmlFor="title" className="block text-gray-700">Video Title</label>
-                                <input type="text" id="title" placeholder="Enter title here" className="rounded-lg border border-gray-300 p-2 w-full" name="title" onChange={fieldChangeHandle} />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="tags" className="block text-gray-700">Video Tags</label>
-                                <input type="text" id="tags" placeholder="mention tags" className="rounded-lg border border-gray-300 p-2 w-full" name="tags" onChange={fieldChangeHandle} />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="description" className="block text-gray-700">Video Description</label>
-                                <input type="text" id="description" placeholder="Enter description" className="rounded-lg border border-gray-300 p-2 w-full" name="description" onChange={fieldChangeHandle} />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="video" className="block text-gray-700">Select video to post</label>
-                                <input id="videoName" type="file" className="block w-full text-gray-700 border border-gray-300 rounded-lg p-2" onChange={handleFileChange} />
-                            </div>
-                            <div style={{ width: 150, height: 150 }}>
-                                <CircularProgressbar
-                                    strokeWidth={10}
-                                    value={singleProgress}
-                                    text={`${singleProgress}%`}
-                                    styles={buildStyles({
-                                        rotation: 0.25,
-                                        strokeLinecap: 'butt',
-                                        textSize: '6px',
-                                        pathTransitionDuration: 0.5,
-                                        pathColor: `rgba(255, 136, 136, ${singleProgress / 100})`,
-                                        textColor: '#f88',
-                                        trailColor: '#d6d6d6',
-                                        backgroundColor: '#3e98c7',
-                                        height: "100px"
-                                    })}
-                                />
-                            </div>
-                            <div className='text-center p-2'>
-                                <button type="submit" className="btn btn-primary rounded-lg mb-2">Upload Video</button>
-                            </div>
-                        </form>
-                    </div>
+                <div className="mb-6 shadow-sm border border-gray-300 rounded p-6 bg-gray-50">
+                    <h3 className="text-3xl font-bold mb-6 text-center">Upload Your Video</h3>
+                    <form onSubmit={createVideo}>
+                        <div className="mb-4">
+                            <label htmlFor="title" className="block text-gray-700 font-medium">Video Title</label>
+                            <input type="text" id="title" name="title" placeholder="Enter title here" value={video.title} onChange={fieldHandleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="tags" className="block text-gray-700 font-medium">Video Tags</label>
+                            <input type="text" id="tags" name="tags" placeholder="Enter tags here" value={video.tags} onChange={fieldHandleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="description" className="block text-gray-700 font-medium">Video Description</label>
+                            <textarea id="description" name="description" placeholder="Enter description here" value={video.description} onChange={fieldHandleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div className="mb-6">
+                            <label htmlFor="video" className="block text-gray-700 font-medium mb-2">Select Video to Post:</label>
+                            <input type="file" onChange={handleFileChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
+                        </div>
+                        <div className="mb-6 w-36 h-36 mx-auto">
+                            <CircularProgressbar
+                                strokeWidth={10}
+                                value={singleProgress}
+                                text={`${singleProgress}%`}
+                                styles={buildStyles({
+                                    rotation: 0.25,
+                                    strokeLinecap: 'butt',
+                                    textSize: '16px',
+                                    pathTransitionDuration: 0.5,
+                                    pathColor: `rgba(62, 152, 199, ${singleProgress / 100})`,
+                                    textColor: '#3e98c7',
+                                    trailColor: '#d6d6d6',
+                                    backgroundColor: '#f0f0f0'
+                                })}
+                            />
+                        </div>
+                        <div className="text-center">
+                            <button type="submit" className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                Upload Video
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -12,13 +12,13 @@ import { Link } from "react-router-dom";
 
 const ViewPost =()=>{
 
-    const[isExpanded,setIsExpanded] = useState(false);
+    //const[isExpanded,setIsExpanded] = useState(false);
     //we do the toggle and collapse of video description with the help of useState State Management Hooks 
     // const[getCollapseProps,getToggleProps] = useCollapse({isExpanded})
     const[videos,setVideos] = useState([]);
-    const[loading,setLoading] = useState(false);
+    //const[loading,setLoading] = useState(false);
 
-    //making an api call with the help of axios api 
+    //making an api call with the help of axios api  
     //async await helps in making an api call and work is done only await promise get resolved
     const fetchData = async () =>{
         try{
@@ -57,7 +57,7 @@ const ViewPost =()=>{
     ) : (
         <div className="container mx-auto px-4">
            
-           <Link to="/">
+           <Link to="/add">
            <button className="p-4 m-8 bg-green-300 rounded-lg">Back To Add Video</button>
            </Link>
            

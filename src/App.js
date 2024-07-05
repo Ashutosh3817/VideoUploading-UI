@@ -29,6 +29,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"/view/:id",
                 element:<View/>
+            },
+            {
+                path:"/add",
+                element:<AddVideo/>
             }
         ]
     }
