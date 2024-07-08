@@ -6,6 +6,9 @@ import Shimmer from './components/Shimmer';
 import ViewPost from './components/GetVideos';
 import AddVideo from './components/AddVideos';
 import View from './components/View';
+import EditVideo from './components/EditVideo';
+import Footer from './components/Footer';
+import './utils/fontAwesome';
 
 const App = ()=>{
     console.log("In app.js")
@@ -13,6 +16,7 @@ const App = ()=>{
         <div className="App">
             <Header/>
             <Outlet/>
+            <Footer/>
         </div>
     )
 }
@@ -33,6 +37,9 @@ const appRouter = createBrowserRouter([
             {
                 path:"/add",
                 element:<AddVideo/>
+            },{
+                path:"/edit/:id",
+                element:<EditVideo/>
             }
         ]
     }

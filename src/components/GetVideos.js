@@ -86,7 +86,7 @@ const ViewPost =()=>{
                         <Link to={"/view/"+video.id}>
                            <button className="p-4 m-8 bg-green-300 rounded-lg"> View </button>
                         </Link>
-                        <Link>
+                        <Link to={"/edit/"+ video.id}>
                            <button className="p-4 m-8 bg-green-300 rounded-lg"> Edit </button>
                         </Link>
                     </div>
