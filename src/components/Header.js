@@ -2,6 +2,7 @@ import mylogo from '../assets/logo.jpg'
 import React, { useState } from 'react';
 import useOnlineStatus from '../utils/useOnlineStatus';
 import 'tailwindcss/tailwind.css';
+import { Link } from 'react-router-dom';
 
 
 const Header = ()=>{
@@ -13,7 +14,8 @@ const Header = ()=>{
     return (
         <div className = "flex justify-between shadow-lg m-2 ">
             <div className="logo-container">
-                <img className='w-40 object-fill m-2 rounded-lg' src={mylogo}></img>
+                <Link to={"/"}><img className='w-40 object-fill m-2 rounded-lg' src={mylogo}></img></Link>
+                
             </div>
             <div className='flex items-center'>
                 <ul className='flex p-4 m-4'>
@@ -42,4 +44,4 @@ const Header = ()=>{
         </div>
     )
 }
-export default Header;
+export default Header ;

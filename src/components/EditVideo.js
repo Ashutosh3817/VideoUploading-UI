@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { LoadVideo } from "../utils/videoService";
 import { BASE_URL } from "../utils/baseUrl";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 const EditVideo = () =>{
-    const[videos,setVideos] = useState([]);
+  //  const[videos,setVideos] = useState([]);
     
     const[user,setUser] = useState({
         id:" ",
@@ -81,7 +81,7 @@ const EditVideo = () =>{
         <div className="min-h-screen flex items-center justify-center py-12 bg-gray-100">
             <div className="w-full max-w-4xl bg-white border rounded-lg p-8 shadow-lg">
                 <div className="mb-6 text-center">
-                    <a className="bg-blue-500 p-2 text-white rounded hover:bg-blue-700" href="/">Click Here to Watch Videos</a>
+                    <Link className="bg-blue-500 p-2 text-white rounded hover:bg-blue-700" to="/">Click Here to Watch Videos</Link>
                 </div>
                 <div className="mb-6 shadow-sm border border-gray-300 rounded p-6 bg-gray-50">
                     <h3 className="text-3xl font-bold mb-6 text-center">Edit Your Video</h3>

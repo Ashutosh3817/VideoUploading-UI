@@ -9,6 +9,7 @@ import View from './components/View';
 import EditVideo from './components/EditVideo';
 import Footer from './components/Footer';
 import './utils/fontAwesome';
+import PremiumSubscription from './components/PremiumSubscription';
 
 const App = ()=>{
     console.log("In app.js")
@@ -40,6 +41,10 @@ const appRouter = createBrowserRouter([
             },{
                 path:"/edit/:id",
                 element:<EditVideo/>
+            },
+            {
+                path:"/premvid",
+                element:<PremiumSubscription/>
             }
         ]
     }

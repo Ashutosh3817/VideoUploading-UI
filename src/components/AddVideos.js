@@ -123,9 +123,9 @@
 //                                 />
 //                             </div>
 //                             <div className="text-center">
-//                                 <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700">
-//                                     Upload Video
-//                                 </button>
+//                                 <button type="submit" className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+//                                Upload Video
+ //                               </button>
 //                             </div>
 //                         </form>
 //                     </div>
@@ -147,7 +147,8 @@ const AddVideo = () => {
     const [video, setVideo] = useState({
         title: "",
         tags: "",
-        description: ""
+        description: "",
+        isPremium: false, // Default value
     });
     const [progress, setProgress] = useState(0);
     const [videos, setVideos] = useState(null);
@@ -238,10 +239,35 @@ const AddVideo = () => {
                             <label htmlFor="description" className="block text-gray-700 font-medium">Video Description</label>
                             <textarea id="description" name="description" placeholder="Enter description here" value={video.description} onChange={fieldHandleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         </div>
+                        
                         <div className="mb-6">
                             <label htmlFor="video" className="block text-gray-700 font-medium mb-2">Select Video to Post:</label>
                             <input type="file" onChange={handleFileChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
                         </div>
+                        <div className="flex items-center space-x-4">
+              <label className="flex items-center space-x-3">
+                <input
+                  type="radio"
+                  name="isPremium"
+                  value="true"
+                  checked={video.isPremium === "true"}
+                  onChange={fieldHandleChange}
+                  className="form-radio h-5 w-5 text-blue-600"
+                />
+                <span className="text-gray-700">True</span>
+              </label>
+              <label className="flex items-center space-x-3">
+                <input
+                  type="radio"
+                  name="isPremium"
+                  value="false"
+                  checked={video.isPremium === "false"}
+                  onChange={fieldHandleChange}
+                  className="form-radio h-5 w-5 text-blue-600"
+                />
+                <span className="text-gray-700">False</span>
+              </label>
+            </div>
                         <div className="mb-6 w-36 h-36 mx-auto">
                             <CircularProgressbar
                                 strokeWidth={10}
