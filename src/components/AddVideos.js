@@ -229,7 +229,7 @@ const AddVideo = () => {
                     <form onSubmit={createVideo}>
                         <div className="mb-4">
                             <label htmlFor="title" className="block text-gray-700 font-medium">Video Title</label>
-                            <input type="text" id="title" name="title" placeholder="Enter title here" value={video.title} onChange={fieldHandleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                             <input type="text" id="title" name="title" placeholder="Enter title here" value={video.title} onChange={fieldHandleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
                         <div className="mb-4">
                             <label htmlFor="tags" className="block text-gray-700 font-medium">Video Tags</label>

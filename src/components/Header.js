@@ -29,7 +29,7 @@ const Header = ()=>{
                     <li className ='px-4'>
                         Contact Us
                     </li>
-
+                    <Link to={"/signup"}>
                     <button className='px-4 bg-green-300 rounded-lg'
                         onClick={()=>{
                             btnNameReact=="login"?
@@ -38,6 +38,7 @@ const Header = ()=>{
                         }}>
                             {btnNameReact}
                     </button>
+                    </Link>
                 </ul>
 
             </div>

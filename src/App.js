@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDom from 'react-dom/client'
 import { Outlet, Route, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Header from "./components/Header";
@@ -10,8 +10,11 @@ import EditVideo from './components/EditVideo';
 import Footer from './components/Footer';
 import './utils/fontAwesome';
 import PremiumSubscription from './components/PremiumSubscription';
+import Signup from './components/signup';
+import SigninForm from './components/Signin';
 
 const App = ()=>{
+    
     console.log("In app.js")
     return(
         <div className="App">
@@ -45,6 +48,14 @@ const appRouter = createBrowserRouter([
             {
                 path:"/premvid",
                 element:<PremiumSubscription/>
+            },
+            {
+                path:"/signup",
+                element:<Signup/>
+            },
+            {
+                path:"/signin",
+                element:<SigninForm />
             }
         ]
     }
