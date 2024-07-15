@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+import { UserContext } from '../utils/UserContext';
 
-const SigninForm = () => {
+const SigninForm = ({setLoggedInUser}) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+
+
+    const{loggedInUser,setUserName} = useContext(UserContext);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,13 +27,25 @@ const SigninForm = () => {
         }
         try {
             const response = await axios.post('http://localhost:8080/api/signin', formData);
+           const {jwt,message,email} = response.data;
+            console.log(jwt)
+          //  console.log(username);
+           const decodeToken = jwtDecode(jwt);
+            // const user = {
+            //     email:decodeToken.
+            // }
+            console.log(decodeToken)
+            // setLoggedInUser("aSHUTOSH")
+            setUserName(decodeToken.firstName + decodeToken.lastName);
             console.log('Form submitted:', response.data);
             setIsLoggedIn(true);
             alert('You are logged in!');
             navigate('/');
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error:', error);
         }
+    
     };
 
     return (

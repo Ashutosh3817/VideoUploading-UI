@@ -12,53 +12,64 @@ import './utils/fontAwesome';
 import PremiumSubscription from './components/PremiumSubscription';
 import Signup from './components/signup';
 import SigninForm from './components/Signin';
-
-const App = ()=>{
+import ProtectedRoute from './utils/ProtectedRoute';
+import { UserContext } from './utils/UserContext';
+const App = () => {
+     const [userName, setUserName] = useState();
+    console.log("In app.js");
     
-    console.log("In app.js")
-    return(
+    return (
+        <UserContext.Provider value={{loggedInUser:userName,setUserName}}>
         <div className="App">
             <Header/>
             <Outlet/>
-            <Footer/>
+            <Footer />
+           
         </div>
-    )
-}
+        </UserContext.Provider>
+    );
+};
 
 const appRouter = createBrowserRouter([
     {
-        path:"/",
-        element:<App/>,
-        children:[
+        path: "/",
+        element: <App />,
+        children: [
             {
-                path:"/",
-                element:<ViewPost/>
+                path: "/",
+                element: (
+                   
+                        <ViewPost />
+                    
+                )
             },
             {
-                path:"/view/:id",
-                element:<View/>
+                path: "/view/:id",
+                element: <View />
             },
             {
-                path:"/add",
-                element:<AddVideo/>
-            },{
-                path:"/edit/:id",
-                element:<EditVideo/>
+                path: "/add",
+                element: <AddVideo />
             },
             {
-                path:"/premvid",
-                element:<PremiumSubscription/>
+                path: "/edit/:id",
+                element: <EditVideo />
             },
             {
-                path:"/signup",
-                element:<Signup/>
+                path: "/premvid",
+                element: <PremiumSubscription />
             },
             {
-                path:"/signin",
-                element:<SigninForm />
+                path: "/signup",
+                element: <Signup />
+            },
+            {
+                path: "/signin",
+                element: <SigninForm />
             }
         ]
     }
-])
+]);
+
 const root = ReactDom.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter}/>)
+root.render(<RouterProvider router={appRouter} />);
