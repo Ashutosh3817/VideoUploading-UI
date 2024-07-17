@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
 
 export const UserContext = createContext({
-    loggedInUser:"default User",
-    isLoggedIn:false
+    loggedInUser: "default User",
+    isLoggedIn: false,
+    setUserName: () => {},
+    setIsUserLoggedIn: () => {}
 });

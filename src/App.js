@@ -15,11 +15,12 @@ import SigninForm from './components/Signin';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { UserContext } from './utils/UserContext';
 const App = () => {
-     const [userName, setUserName] = useState();
+    const [userName, setUserName] = useState();
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
     console.log("In app.js");
     
     return (
-        <UserContext.Provider value={{loggedInUser:userName,setUserName}}>
+        <UserContext.Provider value={{ loggedInUser: userName, setUserName, isLoggedIn: isUserLoggedIn, setIsUserLoggedIn }}>
         <div className="App">
             <Header/>
             <Outlet/>

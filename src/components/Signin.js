@@ -9,11 +9,12 @@ const SigninForm = ({setLoggedInUser}) => {
         email: '',
         password: ''
     });
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    //const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
 
-    const{loggedInUser,setUserName} = useContext(UserContext);
+    const{loggedInUser,setUserName,isLoggedIn, setIsUserLoggedIn} = useContext(UserContext);
+//    const{isLoggedIn,setIsUserLoggedIn} = useContext(UserContext);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,9 +37,11 @@ const SigninForm = ({setLoggedInUser}) => {
             // }
             console.log(decodeToken)
             // setLoggedInUser("aSHUTOSH")
-            setUserName(decodeToken.firstName + decodeToken.lastName);
+             // Set the user name and login status
+             setUserName(`${decodeToken.firstName} ${decodeToken.lastName}`);
+             setIsUserLoggedIn(true);
             console.log('Form submitted:', response.data);
-            setIsLoggedIn(true);
+          //  setIsUserLoggedIn(true);
             alert('You are logged in!');
             navigate('/');
         } 
